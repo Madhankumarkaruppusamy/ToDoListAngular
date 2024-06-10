@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Server.IIS;
+using Microsoft.EntityFrameworkCore;
+using ToDoList.DatabaseContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DBConnection");
-
+builder.Services.AddDbContext<TodoDbContext>(x=>x.UseMySql(connectionString,ServerVersion.AutoDetect(connectionString)));
 
 
 var app = builder.Build();
